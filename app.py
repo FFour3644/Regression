@@ -1,21 +1,31 @@
 
-# Step 0: Import necessary libraries
+import streamlit as st
 import pandas as pd
 import pickle
 
-# Step 1: Load the model from "model-reg-xxx.pkl"
+# Load the trained model
 with open("model-reg-xxx.pkl", "rb") as file:
     model = pickle.load(file)
 
-# Step 2: Create a new DataFrame with the input values
-new_data = pd.DataFrame({
-    "youtube": [50],
-    "tiktok": [50],
-    "instagram": [50]
-})
+# Streamlit app title
+st.title("Advertising Sales Predictor")
 
-# Step 3: Make predictions using the loaded model
-predicted_sales = model.predict(new_data)
+# User input fields
+youtube = st.number_input("YouTube Advertising Budget", min_value=0.0, value=50.0)
+tiktok = st.number_input("TikTok Advertising Budget", min_value=0.0, value=50.0)
+instagram = st.number_input("Instagram Advertising Budget", min_value=0.0, value=50.0)
 
-# Print the result
-print("Predicted sales:", predicted_sales[0])
+# Predict button
+if st.button("Predict Sales"):
+    # Create a DataFrame from user input
+    input_data = pd.DataFrame({
+        "youtube": [youtube],
+        "tiktok": [tiktok],
+        "instagram": [instagram]
+    })
+
+    # Make prediction
+    prediction = model.predict(input_data)
+
+    # Show result
+    st.success(f"Estimated Sales: {prediction[0]:.2f}")
