@@ -4,7 +4,7 @@ import pandas as pd
 import pickle
 
 # Load the trained model
-with open("model-reg-xxx.pkl", "rb") as file:
+with open("model-reg-67130701921.pkl", "rb") as file:
     model = pickle.load(file)
 
 # Streamlit app title
